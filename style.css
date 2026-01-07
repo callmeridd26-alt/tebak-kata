@@ -1,0 +1,251 @@
+/* --- Reset & Base Styles --- */
+:root {
+    --bg-color: #121212;
+    --card-bg: #1e1e1e;
+    --candy-red: #ff4757;
+    --candy-red-dark: #e84118;
+    --text-white: #ffffff;
+    --text-gray: #a4b0be;
+    --accent-glow: rgba(255, 71, 87, 0.5);
+    --green-success: #2ed573;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-white);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Mencegah scroll saat animasi */
+}
+
+/* --- Container Utama --- */
+.game-container {
+    background-color: var(--card-bg);
+    padding: 2rem;
+    border-radius: 25px;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    text-align: center;
+    position: relative;
+    border: 2px solid #333;
+}
+
+/* --- HUD (Heads Up Display) --- */
+.hud {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.hud-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    font-size: 0.8rem;
+    color: var(--text-gray);
+    font-weight: 600;
+}
+
+.value {
+    font-size: 1.2rem;
+    font-weight: 800;
+}
+
+/* --- Timer Bar --- */
+.timer-bar-container {
+    width: 100%;
+    height: 8px;
+    background-color: #333;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+}
+
+.timer-bar-fill {
+    height: 100%;
+    background-color: var(--candy-red);
+    width: 100%;
+    transition: width 0.1s linear;
+    box-shadow: 0 0 10px var(--candy-red);
+}
+
+/* --- Game Area --- */
+.hint-text {
+    color: var(--text-gray);
+    margin-bottom: 0.5rem;
+}
+
+.word-display {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: 5px;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    color: var(--candy-red);
+    text-shadow: 0 0 15px var(--accent-glow);
+    user-select: none;
+}
+
+/* --- Input & Buttons --- */
+input[type="text"] {
+    width: 100%;
+    padding: 15px;
+    border-radius: 15px;
+    border: 2px solid #333;
+    background-color: #2c2c2c;
+    color: white;
+    font-size: 1.2rem;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 1rem;
+    outline: none;
+    transition: 0.3s;
+    text-transform: uppercase;
+}
+
+input[type="text"]:focus {
+    border-color: var(--candy-red);
+    box-shadow: 0 0 15px rgba(255, 71, 87, 0.2);
+}
+
+.controls {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.btn-primary {
+    background-color: var(--candy-red);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.2s;
+    flex-grow: 1;
+}
+
+.btn-primary:hover {
+    background-color: var(--candy-red-dark);
+    box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
+}
+
+.btn-primary:active {
+    transform: scale(0.95);
+}
+
+.btn-secondary {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 12px 15px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-secondary:hover {
+    background-color: #444;
+    transform: rotate(180deg);
+}
+
+/* --- Feedback Messages --- */
+.message-text {
+    height: 20px;
+    margin-top: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* --- Combo Animation --- */
+#combo-display {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #ffd700;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px #ffa502;
+    transition: 0.3s;
+}
+.combo-hidden {
+    opacity: 0;
+    transform: scale(0);
+}
+.combo-visible {
+    opacity: 1;
+    transform: scale(1);
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* --- Modal (Game Over) --- */
+.modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+    z-index: 100;
+}
+.modal.hidden { display: none; }
+
+.modal-content {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 20px;
+    text-align: center;
+    border: 2px solid var(--candy-red);
+    animation: popIn 0.4s;
+}
+
+.modal-content h1 {
+    font-size: 4rem;
+    color: var(--candy-red);
+    margin: 10px 0;
+}
+
+/* --- Keyframe Animations --- */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes glowText {
+    0% { text-shadow: 0 0 5px var(--green-success); }
+    50% { text-shadow: 0 0 20px var(--green-success), 0 0 30px white; }
+    100% { text-shadow: 0 0 5px var(--green-success); }
+}
+
+.shake-anim { animation: shake 0.4s ease-in-out; }
+.correct-anim { color: var(--green-success) !important; animation: glowText 0.5s ease-in-out; }
+
+/* Confetti Particle (Generated by JS) */
+.confetti {
+    position: absolute;
+    width: 10px; height: 10px;
+    background: var(--candy-red);
+    border-radius: 50%;
+    pointer-events: none;
+}
